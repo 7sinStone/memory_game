@@ -126,7 +126,7 @@ function start_game() {
                             first_image = null;
                             bitmap.clicked = false;
                             completed++;
-                            if(completed==1) {
+                            if(completed==8) {
 
                                 stage.addChild(success_image);
                                 success_image.alpha =0;
