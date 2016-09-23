@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	    <meta charset="utf-8">
+    <title>Jeu de mémoire</title>
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<noscript>
+    Vous devez activer javascript dans ton navigateur pour pouvoir jouer au jeu
+</noscript>
+
+    <div id ="stats">
+        <p style="float: left">Nombre de coups : <span id="nbr_coup">0</span></p>
+        <div style="float: right">
+            <p style="float: left"><i class="fa fa-clock-o" aria-hidden="true"></i> </p>
+            <p id="timer" style="margin-left:10px; float: right"><span  id="time">00:00</span></p>
+        </div>
+
+    </div>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <div id="jouer">
+        <button>Jouer</button>
+    </div>
+
+    <div id="rejouer">
+        <button>Rejouer</button>
+    </div>
+
+
+<script src="libs/jquery-3.1.0.min.js"></script>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="js/game.min.js"></script>
+<!--<script src="js/firework.js"></script>-->
+</body>
+</html>
