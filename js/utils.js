@@ -56,3 +56,16 @@ this.startTicker = function(fps,stage) {
         stage.update();
     });
 };
+
+
+$(function () {
+    var img = $('img');
+    img.click(function () {
+        var src = img.attr("src") =="img/speacker.png" ? "img/no-speacker.png" : "img/speacker.png";
+        img.attr("src",src);
+        if(src == "img/no-speacker.png" )
+        createjs.Sound.muted = true;
+        else
+            createjs.Sound.muted = false;
+    });
+});

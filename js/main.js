@@ -7,16 +7,27 @@ var unicefs = [];
 var images_to_use = [];
 
 var time = '',intervalId ;
+var clickID = "click";
+var launchID = "launch";
+var backgroundID = "background";
+var validationID = "validation";
+var winID = "win";
 
 
 function initialize() {
+
+    $("body").append('<div id="loading"></div>');
     $("#rejouer").css("visibility","hidden");
     stage = new createjs.Stage("canvas");
     stage.enableMouseOver(30);
 
     var images_for_validation = [];
-    for(var i=1;i<=17;i++)
+    images_to_use = [];
+    unicefs = [];
+
+    for(var i=0;i<18;i++)
         images_for_validation.push(0);
+
     var validate = false;
     var number = 0;
 
@@ -35,7 +46,6 @@ function initialize() {
         images_to_use.push(number);
         validate = false;
     }
-
 
     shuffle(images_to_use);
 
@@ -60,6 +70,7 @@ function initialize() {
         }
 
     }
+    $("#loading").remove();
 }
 
 
@@ -82,6 +93,8 @@ function startTimer(display) {
 
 function start_game() {
 
+    createjs.Sound.play(backgroundID,{loop:-1});
+
     $("#jouer").css("visibility","hidden");
     jQuery(function ($) {
         var display = $('#time');
@@ -102,6 +115,7 @@ function start_game() {
 
             if(!reached && ! bitmap.clicked)
             {
+                createjs.Sound.play(clickID);
                 bitmap["clicked"] = true;
                 number_flipped++;
                 if(number_flipped == 2)
@@ -126,6 +140,7 @@ function start_game() {
                             first_image = null;
                             bitmap.clicked = false;
                             completed++;
+                            createjs.Sound.play(validationID);
                             if(completed==8) {
 
                                 stage.addChild(success_image);
@@ -134,6 +149,8 @@ function start_game() {
                                     $("#rejouer").css("visibility","visible");
                                 });
                                 clearInterval(intervalId);
+                                createjs.Sound.stop();
+                                createjs.Sound.play(winID);
 
                             }
                         }
@@ -161,13 +178,23 @@ function start_game() {
 
 }
 $(document).ready(function () {
+
+    createjs.Sound.registerSound("sounds/click.ogg", clickID);
+    createjs.Sound.registerSound("sounds/launch.ogg", launchID);
+    createjs.Sound.registerSound("sounds/background.ogg", backgroundID);
+    createjs.Sound.registerSound("sounds/win.ogg", winID);
+    createjs.Sound.registerSound("sounds/validation2.ogg", validationID);
     initialize();
     startTicker(30,stage);
     $("#jouer button").click(function () {
-       start_game();
+        createjs.Sound.stop();
+        createjs.Sound.play(launchID);
+        start_game();
     });
 
     $("#rejouer button").click(function () {
+        createjs.Sound.stop();
+        createjs.Sound.play(launchID);
         $("#rejouer").css("visibility","hidden");
         initialize();
         startTicker(30,stage);

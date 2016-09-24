@@ -4,9 +4,10 @@
 body {
     background-color: #f1f1f1;
 }
-#canvas,#jouer,#rejouer{
+#canvas,#jouer,#rejouer,#loading{
     padding: 0;
     margin: auto;
+    margin-top: 40px;
     display: block;
     width: 600px;
     height: 600px;
@@ -15,9 +16,13 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    border : groove 12px rgba(0, 174, 239, 1);
+    border : groove 6px rgba(0, 174, 239, 1);
     box-shadow:  3px 0px 30px -6px rgba(0, 174, 239, 0.6)  ;
     z-index: 2 ;
+}
+
+#loading{
+    background-color: #fff;
 }
 
 #jouer{
@@ -27,13 +32,9 @@ body {
 #stats
 {
     padding: 0;
-    margin: auto ;
-    margin-top: 15px;
+    margin:auto;
+    margin-top: -20px;
     display: block;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     width: 600px;
     height: 60px;
     color: #666;
@@ -47,11 +48,6 @@ body {
     font-size: 25px;
 }
 
-
-@font-face {
-    font-family: umberto;
-    src: url('../fonts/umberto.ttf');
-}
 
 @font-face {
     font-family: timer;
@@ -80,4 +76,15 @@ button {
 #rejouer button{
     top: 70%;
     box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.6);
+}
+
+#rejouer{
+    visibility: hidden;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    margin-right: 350px;
+    cursor: pointer;
 }
