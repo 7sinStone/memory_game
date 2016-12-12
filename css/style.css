@@ -20,7 +20,7 @@ body {
 
 @media all and (max-width: 768px) { 
    #speacker {
-     right: 150px;
+     right: 0px;
    } 
 }
 
