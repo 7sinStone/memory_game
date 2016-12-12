@@ -17,6 +17,13 @@ body {
      right: 250px;
      top: 70px;
 }
+
+@media all and (max-width: 768px) { 
+   #speacker {
+     right: 150px;
+   } 
+}
+
 #canvas,#jouer,#rejouer,#loading{
     padding: 0;
     margin: auto;
