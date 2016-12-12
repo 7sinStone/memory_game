@@ -16,7 +16,7 @@ var winID = "win";
 
 function initialize() {
 
-    $("body").append('<div id="loading"></div>');
+    $("#container").append('<div id="loading"></div>');
     $("#rejouer").css("visibility","hidden");
     stage = new createjs.Stage("canvas");
     stage.enableMouseOver(30);
