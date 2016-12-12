@@ -26,6 +26,18 @@ body {
     font-family: arial;
 }
 
+
+@media all and (max-width: 768px) { 
+   #speacker {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+     top: 70px;
+     position: absolute;
+     right: 10%;
+   } 
+}
+
 #canvas,#jouer,#rejouer,#loading{
     padding: 0;
     margin: auto;
@@ -39,7 +51,7 @@ body {
     right: 0;
     border : groove 6px rgba(0, 174, 239, 1);
     box-shadow:  3px 0px 30px -6px rgba(0, 174, 239, 0.6);
-    position: absolute;
+    position: fixed;
 
 }
 
