@@ -4,17 +4,13 @@ body {
     background-color: #f1f1f1;
 }
 
-#container{
-}
-
-
 #speacker {
     width: 50px;
     height: 50px;
     cursor: pointer;
-     right: 250px;
+     right: 20%;
      top: 70px;
-     position: fixed;
+     position: absolute;
 }
 
 #stats
@@ -30,13 +26,6 @@ body {
     font-family: arial;
 }
 
-
-@media all and (max-width: 768px) { 
-   #speacker {
-     right: 0px;
-   } 
-}
-
 #canvas,#jouer,#rejouer,#loading{
     padding: 0;
     margin: auto;
@@ -50,7 +39,7 @@ body {
     right: 0;
     border : groove 6px rgba(0, 174, 239, 1);
     box-shadow:  3px 0px 30px -6px rgba(0, 174, 239, 0.6);
-    position: fixed;
+    position: absolute;
 
 }
 
@@ -61,14 +50,7 @@ body {
 
 #jouer{
     background-color: rgba(50 , 50, 50, 0.8);
-    z-index: 9;
-
 }
-
-#canvas{
-    
-}
-
 
 #timer {
     font-family: timer;
