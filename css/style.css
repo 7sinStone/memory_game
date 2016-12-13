@@ -27,18 +27,7 @@ body {
 }
 
 
-@media all and (max-width: 768px) { 
-   #speacker {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-     top: 70px;
-     position: absolute;
-     right: 100%;
-   } 
-}
-
-#canvas,#jouer,#rejouer,#loading{
+#canvas,#play,#replay,#loading{
     padding: 0;
     margin: auto;
     margin-top: 45px;
@@ -60,7 +49,7 @@ body {
     background-color: #fff;
 }
 
-#jouer{
+#play{
     background-color: rgba(50 , 50, 50, 0.8);
 }
 
@@ -94,12 +83,12 @@ button {
     cursor: pointer;
 }
 
-#rejouer button{
+#replay button{
     top: 70%;
     box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.6);
 }
 
-#rejouer{
+#replay{
     visibility: hidden;
 }
 

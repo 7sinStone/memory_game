@@ -1,26 +1,36 @@
+// initialize the Graphics and Shape variables
 var Graphics = createjs.Graphics;
 var Shape = createjs.Shape;
-
-
+// the main object to use to draw on canvas 
 var stage;
-var unicefs = [];
-var images_to_use = [];
+//the array that hold the unicefs images
+var unicefs;
+// the array that hold the id of the images
+var images_to_use;
+//the success image
+var success_image = createBitmap("img/27.jpg",0,0);
+
 
 var time = '',intervalId ;
+//ids for the sound effects
 var clickID = "click";
 var launchID = "launch";
 var backgroundID = "background";
 var validationID = "validation";
 var winID = "win";
 
-
+//function called everytime before starting the game
 function initialize() {
 
+    //add a white screen while preparing everything
     $("#container").append('<div id="loading"></div>');
-    $("#rejouer").css("visibility","hidden");
+    //hide the replay screens
+    $("#replay").css("visibility","hidden");
+    //initilize the stage object
     stage = new createjs.Stage("canvas");
     stage.enableMouseOver(30);
 
+    //table used to select 8 unique images
     var images_for_validation = [];
     images_to_use = [];
     unicefs = [];
@@ -31,6 +41,7 @@ function initialize() {
     var validate = false;
     var number = 0;
 
+    //select 8 uniques images randomly
     for (var i=0;i<8;i++)
     {
         while(!validate)
@@ -42,13 +53,19 @@ function initialize() {
                 validate = true;
             }
         }
+        //double the images
         images_to_use.push(number);
         images_to_use.push(number);
         validate = false;
     }
-
+    //suffle the images
     shuffle(images_to_use);
 
+    while(!("#loading").length)
+    {
+    }
+    
+    //draw the images in the canvas using the stage object
     for(var i=0;i<4;i++)
     {
         for(var j=0;j<4;j++)
@@ -59,6 +76,7 @@ function initialize() {
 
     }
 
+    //draw the unicef images
     for(var i=0;i<4;i++)
     {
         for(var j=0;j<4;j++)
@@ -70,11 +88,12 @@ function initialize() {
         }
 
     }
+    //remove the loading screen
     $("#loading").remove();
 }
 
 
-
+//function to increment the timer
 function startTimer(display) {
     var timer = 0, minutes, seconds;
 
@@ -91,48 +110,62 @@ function startTimer(display) {
     }, 1000);
 }
 
+//function called when we click on play button
 function start_game() {
 
+    //start the main sound
     createjs.Sound.play(backgroundID,{loop:-1});
 
-    $("#jouer").css("visibility","hidden");
+    //remove the play button
+    $("#play").css("visibility","hidden");
+    //start incrementing the timer
     jQuery(function ($) {
         var display = $('#time');
         startTimer(display);
     });
 
-    var success_image = createBitmap("img/27.jpg",0,0);
+    
     var number_flipped = 0, reached = false;
     var first_image = null;
     var completed = 0;
     var nbr_coup =0;
     $("#nbr_coup").text(nbr_coup);
 
-
+    //foreach bitmap we associate a click function
     unicefs.forEach(function (bitmap) {
 
         bitmap.addEventListener("click",function () {
-
+            //if we didn't win the game and we didn't click on the same unicef image twice
             if(!reached && ! bitmap.clicked)
             {
+                //play the click sound
                 createjs.Sound.play(clickID);
+                //we mark the unicef image as clicked
                 bitmap["clicked"] = true;
+                //we increment the number of flipped images
                 number_flipped++;
+                //if we flipped 2 images already
                 if(number_flipped == 2)
                     reached =true;
+                //we call a function after play some animation
                 createjs.Tween.get(bitmap).to({scaleY:0.5},300).to({alpha:0,scaleY:0},300).call(function(){
-
+                    //if this is the first image to flip
                     if(first_image == null)
                     {
+                        //we mark that image
                         first_image = bitmap;
                         bitmap.clicked = false;
-                    }else
+                    }
+                    else
                     {
+                        //we increment the number of hits
                         nbr_coup++;
                         $("#nbr_coup").text(nbr_coup);
 
+                        //if the player flip the same image
                         if(images_to_use[first_image.num] == images_to_use[bitmap.num])
                         {
+                            //the flip is validated
                             first_image.visible = false;
                             bitmap.visible = false;
                             number_flipped=0;
@@ -140,16 +173,20 @@ function start_game() {
                             first_image = null;
                             bitmap.clicked = false;
                             completed++;
+                            //we play a sound for validation
                             createjs.Sound.play(validationID);
+                            //if we reach 8 correct flips we stop the game
                             if(completed==8) {
-
+                                //we show the success image
                                 stage.addChild(success_image);
                                 success_image.alpha =0;
                                 createjs.Tween.get(success_image).wait(100).set({alpha:0}).to({alpha:1},500).call(function () {
-                                    $("#rejouer").css("visibility","visible");
+                                    $("#replay").css("visibility","visible");
                                 });
                                 clearInterval(intervalId);
+                                //we stop playing the main sound
                                 createjs.Sound.stop();
+                                //we play the win sound
                                 createjs.Sound.play(winID);
 
                             }
@@ -177,25 +214,48 @@ function start_game() {
     });
 
 }
+
+
 $(document).ready(function () {
 
+    //initialize the sounds 
     createjs.Sound.registerSound("sounds/click.ogg", clickID);
     createjs.Sound.registerSound("sounds/launch.ogg", launchID);
     createjs.Sound.registerSound("sounds/background.ogg", backgroundID);
     createjs.Sound.registerSound("sounds/win.ogg", winID);
     createjs.Sound.registerSound("sounds/validation2.ogg", validationID);
+
+    //for muting/unmuting the playing sound 
+    var img = $('#speacker');
+    img.click(function () {
+        var src = img.attr("src") =="img/speacker.png" ? "img/no-speacker.png" : "img/speacker.png";
+        img.attr("src",src);
+        if(src == "img/no-speacker.png" )
+        createjs.Sound.muted = true;
+        else
+            createjs.Sound.muted = false;
+    });
+
+
     initialize();
     startTicker(30,stage);
-    $("#jouer button").click(function () {
-        createjs.Sound.stop();
+    // this function is called when we click the play button
+    $("#play button").click(function () {
+        // we play the launch sound
         createjs.Sound.play(launchID);
+        //we call the start_game
         start_game();
     });
 
-    $("#rejouer button").click(function () {
+    // this function is called when we click the replay button
+    $("#replay button").click(function () {
+        //we stop playing any sound
         createjs.Sound.stop();
+        //we play the launch sound
         createjs.Sound.play(launchID);
-        $("#rejouer").css("visibility","hidden");
+        //we hide the replay button
+        $("#replay").css("visibility","hidden");
+        //we call the intialize funtion and the start_game function
         initialize();
         startTicker(30,stage);
         start_game();
